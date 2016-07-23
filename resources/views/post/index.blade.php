@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
     <div class=" col-sm-8">
-        @foreach ($posts as $post)
         <div>
             <div class="panel panel-default panel-post">
                 <div class="panel-heading panel-post clearfix">
@@ -26,9 +25,8 @@
                 </div>
             </div>
         </div>
-        @endforeach
     </div>
-    
+
     <div class="col-sm-4">
         <div class="panel panel-default panel-post">
             <div class="panel-heading">

@@ -16,3 +16,5 @@ Route::get('/', 'WallController@index');
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::resource('post', 'PostController');
