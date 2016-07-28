@@ -1,9 +1,9 @@
 <div>
     <div class="panel panel-default panel-post">
         <div class="panel-heading panel-post clearfix">
-            <a href="{{ url('/post/' .$post->id) }} "><b>{{ $post->title}}</b></a> <small>@nick</small>
+            <a href="{{ url('/post/' .$post->id) }} "><b>{{ $post->title }}</b></a> <small>@ {{ $post->user->name or 'Anonim' }}</small>
             <div class="pull-right">
-                ocena / data dodania
+                ocena / {{ $post->created_at->format('d/m/Y') }}
             </div>
         </div>
         <div class="panel-body">
