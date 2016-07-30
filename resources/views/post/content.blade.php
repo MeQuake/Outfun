@@ -1,7 +1,14 @@
 <div>
     <div class="panel panel-default panel-post">
         <div class="panel-heading panel-post clearfix">
-            <a href="{{ url('/post/' .$post->id) }} "><b>{{ $post->title }}</b></a> <small>@ {{ $post->user->name or 'Anonim' }}</small>
+            <a href="{{ url('/post/' .$post->id) }} "><b>{{ $post->title }}</b></a>
+            <small>@
+                @if (isset($post->user->name))
+                    <a href="{{ url('/profile/' .$post->user->name) }}">{{ $post->user->name }}</a>
+                @else
+                    Anonymous
+                @endif
+            </small>
             <div class="pull-right">
                 ocena / {{ $post->created_at->format('d/m/Y') }}
             </div>
