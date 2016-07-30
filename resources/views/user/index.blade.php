@@ -13,11 +13,7 @@
         </div>
     </div>
     <div class=" col-sm-8">
-        @foreach ($user->posts as $post)
-        <div>
-            @include('post.content')
-        </div>
-        @endforeach
+        @each('post.content', $user->posts, 'post')
     </div>
 </div>
 @endsection
