@@ -12,10 +12,6 @@
 */
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
-
-Route::resource('post', 'PostController');
-
 Route::group(['middleware' => ['auth']], function () {
     //Wall
     Route::get('/', 'WallController@index');
@@ -26,4 +22,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('profile/{name}', 'UserController@getUserByName');
+
+    //Post
+    Route::post('post/{id}/like', 'PostController@like');
 });
+
+Route::resource('post', 'PostController');

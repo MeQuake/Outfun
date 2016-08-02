@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Http\Response;
 use App\Post;
+use App\Like;
 
 class PostController extends Controller
 {
@@ -83,5 +85,25 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+    * Like or unlike specified Post
+    * @param Request $request
+    * @param int $id (post_id)
+    * @return \Illuminate\Http\Response
+    */
+    public function like(Request $request, $id)
+    {
+        $like = Like::where('user_id', $request->user()->id)
+                    ->where('post_id', $id)
+                    ->first();
+        if($like) {
+            $like->delete();
+            return response()->json(['message' => 'unliked']);
+        } else {
+            Like::create(['user_id' => $request->user()->id, 'post_id' => $id])->save();
+            return response()->json(['message' => 'liked']);
+        }
     }
 }
