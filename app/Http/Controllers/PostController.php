@@ -8,9 +8,18 @@ use App\Http\Requests;
 use Illuminate\Http\Response;
 use App\Post;
 use App\Like;
+use App\File;
+use Storage;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => [
+            'show'
+        ]]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +37,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('forms.post.create');
     }
 
     /**
@@ -39,7 +48,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'bail|required|unique:posts|max:60',
+            'content' => 'required',
+            'file.*' => 'image|max:3000',
+        ]);
+
+        $post = new Post;
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->user_id = $request->user()->id;
+        $post->type = "img";
+        $post->save();
+
+        foreach($request->file as $file)
+        {
+            $_file = new File;
+            $_file->name = uniqid(mt_rand(), true).'.'.$file->getClientOriginalExtension();
+            $_file->post_id = $post->id;
+            $_file->save();
+            Storage::disk('images')->put($_file->name, \File::get($file));
+        }
     }
 
     /**

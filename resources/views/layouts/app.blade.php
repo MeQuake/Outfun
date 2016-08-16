@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="/css/bootstrap-mod.css" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+    <!-- Dropzone -->
+    <link rel="stylesheet" href="/css/dropzone.css" crossorigin="anonymous">
+
+    <!-- Slick -->
+    <link rel="stylesheet" href="/css/slick.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/slick-theme.css" crossorigin="anonymous">
+
     <style>
         body {
             font-family: 'Lato';
@@ -49,14 +56,15 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/post/create') }}">Dodaj</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Zaloguj</a></li>
+                        <li><a href="{{ url('/register') }}">Zarejestruj</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -64,9 +72,9 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/profile') }}"><i class="fa fa-btn fa-user"></i>Profile</a></li>
+                                <li><a href="{{ url('/profile') }}"><i class="fa fa-btn fa-user"></i>Profil</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Wyloguj</a></li>
                             </ul>
                         </li>
                     @endif
@@ -80,7 +88,8 @@
     <!-- JavaScripts -->
     <script src="/js/jquery.min.js" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="/js/ajax.js" crossorigin="anonymous"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="/js/dropzone.js" crossorigin="anonymous"></script>
+    <script src="/js/slick.min.js" crossorigin="anonymous"></script>
+    <script src="/js/app.js" crossorigin="anonymous"></script>
 </body>
 </html>

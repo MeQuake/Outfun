@@ -12,19 +12,17 @@
 */
 Route::auth();
 
-Route::group(['middleware' => ['auth']], function () {
-    //Wall
-    Route::get('/', 'WallController@index');
+//Wall
+Route::get('/', 'WallController@index');
 
+//Post
+Route::post('post/{id}/like', 'PostController@like');
+Route::resource('post', 'PostController');
+
+Route::group(['middleware' => ['auth']], function () {
     //Profile
     Route::get('profile', function() {
         return view('user.index', ['user' => Auth::user()]);
     });
-
     Route::get('profile/{name}', 'UserController@getUserByName');
-
-    //Post
-    Route::post('post/{id}/like', 'PostController@like');
 });
-
-Route::resource('post', 'PostController');

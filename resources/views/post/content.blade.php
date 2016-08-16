@@ -15,7 +15,15 @@
         </div>
         <div class="panel-body">
             <div class="col-sm-offset-1 col-sm-10">
-                <img src="/images/{{ $post->hash }}.jpg" class="img-responsive" alt="{{ $post->title }}">
+                @if (count($post->files) > 0)
+                <div class="photo-preview">
+                    @foreach ($post->files as $file)
+                        <div>
+                            <img src="/images/{{ $file->name }}" class="img-responsive">
+                        </div>
+                    @endforeach
+                </div>
+                @endif
             </div>
         </div>
         <div class="panel-footer panel-footer-post">
