@@ -78,7 +78,7 @@ $(document).ready(function(){
         }
     });
 
-    $('a.thumb-up-button').click(function(e) {
+    $('button.thumb-up-button').click(function(e) {
         var task_id = $(this).attr('value');
         console.log("clicked thumb up button");
         sendRequest("post", "like", task_id);

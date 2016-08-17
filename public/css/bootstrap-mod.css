@@ -81,8 +81,8 @@ body {
     letter-spacing: 1px;
 }
 
-.btn:focus, .btn:active:focus, .btn.active:focus {
-    outline: 0 none;
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus {
+    outline: none !important;
 }
 
 .btn-primary {
@@ -99,13 +99,12 @@ body {
     box-shadow: none;
 }
 
-.btn-footer-post {
+.btn-footer-post .btn {
     border-radius: 0;
 }
-
-.btn-footer-post:not(:last-child) {
-	border-right: 1px solid #dcdcdc;
-}
+.btn-footer-post .btn-group:not(:last-child) {
+   border-right: 1px solid #dcdcdc;
+ }
 
 /* Boostrap post modification */
 
