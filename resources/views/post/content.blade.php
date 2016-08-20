@@ -29,7 +29,7 @@
         <div class="panel-footer panel-footer-post">
             <div class="btn-group btn-group-justified btn-footer-post" role="group">
                 <div class="btn-group" role="group">
-                    <button value="{{ $post->id }}" type="button" class="btn btn-default btn-lg thumb-up-button"><span class="glyphicon glyphicon-thumbs-up green"></span> Fajne</button>
+                    <button value="{{ $post->id }}" type="button" class="btn btn-default btn-lg thumb-up-button {{ $post->likes->contains('user_id', Auth::user()->id) == true ? 'focus' : '' }}"><span class="glyphicon glyphicon-thumbs-up green"></span> Fajne</button>
                 </div>
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-heart-empty red"></span> Ulubione</button>

@@ -79,25 +79,38 @@ $(document).ready(function(){
     });
 
     $('button.thumb-up-button').click(function(e) {
-        var task_id = $(this).attr('value');
-        console.log("clicked thumb up button");
-        sendRequest("post", "like", task_id);
+        var self = this;
+        var task_id = $(self).attr('value');
+        var callback = function ($message) {
+            switch($message) {
+                case "liked":
+                    $(self).focus();
+                    break;
+                case "unliked":
+                    $(self).blur();
+                    $(self).removeClass("focus");
+                    break;
+                default:
+                    console.log("unkown");
+            }
+        };
+        sendRequest("post", "like", task_id, callback);
         //Prevent default action (scrooling to specified element for example)
         e.preventDefault();
     });
 
-    function sendRequest(action, subaction, id) {
+    function sendRequest(action, subaction, id, callback) {
         $.ajax({
             type: "POST",
             dataType : 'json',
             url: "/" + action + "/" + id + "/" + subaction,
             success: function (data) {
-                console.log(data);
-                alert(data['message']);
+                callback(data['message']);
+                //alert(data['message']);
             },
             error: function (data) {
                 console.log('Error:', data);
-                alert("something went wrong");
+                alert("coś poszło nie tak");
             }
         });
     }

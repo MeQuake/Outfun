@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Response;
-use App\Post;
-use App\Like;
-use App\File;
 use Storage;
 
 class PostController extends Controller
 {
+    protected $posts;
 
-    public function __construct()
+    public function __construct(PostRepository $posts)
     {
         $this->middleware('auth', ['except' => [
             'show'
         ]]);
+        $this->posts = $posts;
     }
     /**
      * Display a listing of the resource.
@@ -49,24 +49,22 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'bail|required|unique:posts|max:60',
+            'title' => 'bail|required|max:60',
             'content' => 'required',
             'file.*' => 'image|max:3000',
         ]);
 
-        $post = new Post;
-        $post->title = $request->title;
-        $post->content = $request->content;
-        $post->user_id = $request->user()->id;
-        $post->type = "img";
-        $post->save();
+        $post = $request->user()->posts()->create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'type' => "img",
+        ]);
 
         foreach($request->file as $file)
         {
-            $_file = new File;
-            $_file->name = uniqid(mt_rand(), true).'.'.$file->getClientOriginalExtension();
-            $_file->post_id = $post->id;
-            $_file->save();
+            $_file = $post->files()->create([
+                'name' => uniqid(mt_rand(), true).'.'.$file->getClientOriginalExtension()
+            ]);
             Storage::disk('images')->put($_file->name, \File::get($file));
         }
     }
@@ -79,7 +77,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('post.index', ['post' => Post::findOrFail($id)]);
+        return view('post.index', ['post' => $this->posts->getPostById($id)]);
     }
 
     /**
@@ -124,14 +122,14 @@ class PostController extends Controller
     */
     public function like(Request $request, $id)
     {
-        $like = Like::where('user_id', $request->user()->id)
-                    ->where('post_id', $id)
-                    ->first();
-        if($like) {
-            $like->delete();
+        if($this->posts->userLiked($request->user()->id, $id))
+        {
+            $this->posts->deleteLike($request->user()->id, $id);
             return response()->json(['message' => 'unliked']);
-        } else {
-            Like::create(['user_id' => $request->user()->id, 'post_id' => $id])->save();
+        }
+        else
+        {
+            $this->posts->saveLike($request->user()->id, $id);
             return response()->json(['message' => 'liked']);
         }
     }

@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'content', 'type',
+    ];
+
+    /**
     * Get the user that owns the post.
     */
     public function user()
@@ -17,5 +26,10 @@ class Post extends Model
     public function files()
     {
         return $this->hasMany(File::Class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::Class);
     }
 }
