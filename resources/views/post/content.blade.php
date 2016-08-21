@@ -10,7 +10,14 @@
                 @endif
             </small>
             <div class="pull-right">
-                ocena / {{ $post->created_at->format('d/m/Y') }}
+                @if ($post->likes->count() > 0)
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <span class="badge">{{ $post->likes->count() }}</span>
+                @else
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <span class="badge">0</span>
+                @endif
+                <small>{{ $post->created_at->format('d/m/Y') }}</small>
             </div>
         </div>
         <div class="panel-body">

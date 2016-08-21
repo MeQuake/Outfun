@@ -130,3 +130,13 @@ body {
 .blue {
     color: #3029FF;
 }
+
+/* Center glyphicons */
+.panel .pull-right .glyphicon {
+    vertical-align: middle;
+    top: 0px;
+}
+
+.panel .panel-footer .glyphicon {
+    top: 2px;
+}
