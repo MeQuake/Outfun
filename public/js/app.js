@@ -60,13 +60,12 @@ $(document).ready(function(){
         ]
     });
 
-
     $('.photo-preview').slick({
         dots: true,
         infinite: true,
-        arrows: true,
         speed: 500,
         fade: true,
+        adaptiveHeight: true,
         cssEase: 'linear'
     });
 

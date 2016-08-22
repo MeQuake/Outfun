@@ -140,3 +140,9 @@ body {
 .panel .panel-footer .glyphicon {
     top: 2px;
 }
+
+/* Slick preview modifications */
+.photo-preview img {
+    margin-left: auto;
+    margin-right: auto
+}
